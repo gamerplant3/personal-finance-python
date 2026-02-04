@@ -1,3 +1,10 @@
+| file | description |
+| :--- | :--- |
+| analyze_directory.py | given a directory, returns count of filetypes contained in that folder and total file sizes |
+| balance_at_maturity.py | given current date, mortgage balance, and maturity date, returns the remaining principal balance at end of term |
+| prepayment_analysis.py | given mortgage balance and terms, simulates various prepayment scenarios and effect of different frequencies |
+| cashflow_2026.py | determines weekly cashflow for a given timeframe given list of income and expenses to determine debt payoff |
+
 **output figure from analyze_directory.py**
 ![image](https://github.com/user-attachments/assets/53668afe-28b1-4136-9f71-d64562285d6e)
 
@@ -27,4 +34,7 @@ Extra   Freq Prepayments Principal Paid Saved by Freq Saved by Prepay Total Int 
  $200 Weekly  $52,000.00    $114,089.04     $1,003.59       $5,036.63       $6,040.22        $236,900.61
  $250 Weekly  $65,000.00    $128,348.19     $1,003.59       $6,295.78       $7,299.37        $222,641.46
 ```
- 
+
+**output from cashflow_2026.py**
+<img width="2198" height="1313" alt="Screenshot 2026-02-03 214913" src="https://github.com/user-attachments/assets/9e240b73-807f-448f-96b9-9d8ea152fec6" />
+
