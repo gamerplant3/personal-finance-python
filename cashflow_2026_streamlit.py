@@ -228,9 +228,6 @@ for week in range(number_of_weeks):
                     if (sim_bank_balance - cost['amt']) < min_bank_buffer:
                         available_above_buffer = max(0, sim_bank_balance - min_bank_buffer)
                         needed = cost['amt'] - available_above_buffer
-                        loans[1]['bal'] += needed
-                        sim_bank_balance += needed
-                        outflows.append(f"LOC Float: +${needed:,.2f}")
 
                         # Table Entry
                         payment_table_data.append({
@@ -243,6 +240,9 @@ for week in range(number_of_weeks):
                             "Dest. Balance": "",
                             "Amount to Pay": f"${needed:,.2f}"
                         })
+                        loans[1]['bal'] += needed
+                        sim_bank_balance += needed
+                        outflows.append(f"LOC Float: +${needed:,.2f}")
                         payment_made_this_week = True
                     else:
                         # if bank balance is sufficient to cover cost without hitting buffer
@@ -315,11 +315,6 @@ for week in range(number_of_weeks):
 
             # when LOC is paid off, stop making table entries
             if payment > 0.01:
-                l['bal'] -= round(payment, 2)
-                sim_bank_balance -= round(payment, 2)
-                outflows.append(f"Paid {l['desc']}: -${payment:,.2f}")
-                payment_made_this_week = True
-
                 payment_table_data.append({
                     "Week": week_start.strftime('%Y-%m-%d'),
                     "Income": f"${weekly_income_total:,.2f}",
@@ -330,6 +325,10 @@ for week in range(number_of_weeks):
                     "Dest. Balance": f"${l['bal']:,.2f}",
                     "Amount to Pay": f"${payment:,.2f}"
                 })
+                l['bal'] -= round(payment, 2)
+                sim_bank_balance -= round(payment, 2)
+                outflows.append(f"Paid {l['desc']}: -${payment:,.2f}")
+                payment_made_this_week = True
 
     # --- Log all weeks, including ones with no payments in them ---
     if not payment_made_this_week:
