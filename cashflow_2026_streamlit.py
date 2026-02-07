@@ -1,5 +1,5 @@
 # streamlit version of cashflow_2026.py which allows user to change inputs
-# run in terminal: streamlit run app.py
+# run in terminal: streamlit run cashflow_2026_streamlit.py
 
 """
 what it is:
@@ -116,11 +116,11 @@ with st.sidebar:
 
     d1, d2 = st.columns(2)
     cc_bal = d1.number_input("Credit Card", value=4000.0, step=100.0, key="cc_b")
-    cc_rate = d2.number_input("APR %", value=21.99, step=0.01, key="cc_r") / 100
+    cc_rate = d2.number_input("APR %", value=21.99, step=1.0, key="cc_r") / 100
 
     d3, d4 = st.columns(2)
     loc_bal = d3.number_input("Line of Credit", value=15000.0, step=1000.0, key="loc_b")
-    loc_rate = d4.number_input("APR %", value=5.45, step=0.01, key="loc_r") / 100
+    loc_rate = d4.number_input("APR %", value=5.45, step=0.05, key="loc_r") / 100
 
     cc_due_ui = st.date_input("Next CC Due Date", value=datetime(2026, 2, 9))
 
@@ -149,13 +149,45 @@ housing_inputs = [
 data = []
 current_date = start_date
 sim_bank_balance = float(bank_balance)
-total_interest_paid = 0.0 # Track cumulative interest
+total_interest_paid = 0.0
 windfalls = [{"desc": "Bonus", "amt": wf_amt, "date": datetime.combine(wf_date, datetime.min.time())}]
+payment_table_data = []
 
 for week in range(number_of_weeks):
     week_start, week_end = current_date, current_date + timedelta(days=6)
     inflows, outflows = [], []
 
+    # --- PRE-CALCULATE WEEKLY TOTALS FOR TABLE ---
+    weekly_income_total = 0.0
+    weekly_expense_total = 0.0
+    for i in range(7):
+        d = week_start + timedelta(days=i)
+        if d > end_date: break
+
+        if (d - next_pay_date).days % 14 == 0 and d >= next_pay_date:
+            weekly_income_total += income_biweekly
+        for w in windfalls:
+            if d.date() == w['date'].date():
+                weekly_income_total += w['amt']
+
+        for cost in housing_inputs:
+            hit = False
+            if cost['freq'] == "weekly" and d.weekday() == cost['day']:
+                hit = True
+            elif cost['freq'] == "bi-weekly" and (d - start_date).days % 14 == 0:
+                hit = True
+            elif cost['freq'] == "monthly" and d.day == cost['day']:
+                hit = True
+            elif cost['freq'] == "bi-monthly":
+                month_diff = (d.year - start_date.year) * 12 + (d.month - start_date.month)
+                if month_diff % 2 == 0 and d.day == cost['day']: hit = True
+            elif cost['freq'] == "quarterly" and d.day == cost['day'] and d.month in [3, 6, 9, 12]:
+                hit = True
+            if hit: weekly_expense_total += cost['amt']
+
+    payment_made_this_week = False
+
+    # daily tracking
     for i in range(7):
         d = week_start + timedelta(days=i)
         if d > end_date: break
@@ -182,8 +214,7 @@ for week in range(number_of_weeks):
                 hit = True
             elif cost['freq'] == "bi-monthly":
                 month_diff = (d.year - start_date.year) * 12 + (d.month - start_date.month)
-                if month_diff % 2 == 0 and d.day == cost['day']:
-                    hit = True
+                if month_diff % 2 == 0 and d.day == cost['day']: hit = True
             elif cost['freq'] == "quarterly" and d.day == cost['day'] and d.month in [3, 6, 9, 12]:
                 hit = True
 
@@ -193,49 +224,125 @@ for week in range(number_of_weeks):
                     loans[0]['bal'] += cost['amt']
                     outflows.append(f"{cost['desc']} (CC): -${cost['amt']:,.2f}")
                 else:
-                    # Hits Bank first
+                    # Check if paying this expense would drop the bank below the minimum buffer
+                    if (sim_bank_balance - cost['amt']) < min_bank_buffer:
+                        available_above_buffer = max(0, sim_bank_balance - min_bank_buffer)
+                        needed = cost['amt'] - available_above_buffer
+                        loans[1]['bal'] += needed
+                        sim_bank_balance += needed
+                        outflows.append(f"LOC Float: +${needed:,.2f}")
+
+                        # Table Entry
+                        payment_table_data.append({
+                            "Week": week_start.strftime('%Y-%m-%d'),
+                            "Income": f"${weekly_income_total:,.2f}",
+                            "Expenses": f"${weekly_expense_total:,.2f}",
+                            "Source Account": "Line of Credit",
+                            "Source Balance": f"${loans[1]['bal']:,.2f}",
+                            "Destination": f"{cost['desc']} (LOC Cover)",
+                            "Dest. Balance": "",
+                            "Amount to Pay": f"${needed:,.2f}"
+                        })
+                        payment_made_this_week = True
+                    else:
+                        # if bank balance is sufficient to cover cost without hitting buffer
+                        payment_table_data.append({
+                            "Week": week_start.strftime('%Y-%m-%d'),
+                            "Income": f"${weekly_income_total:,.2f}",
+                            "Expenses": f"${weekly_expense_total:,.2f}",
+                            "Source Account": "Bank Account",
+                            "Source Balance": f"${sim_bank_balance:,.2f}",
+                            "Destination": f"{cost['desc']}",
+                            "Dest. Balance": "",
+                            "Amount to Pay": f"${cost['amt']:,.2f}"
+                        })
+                        payment_made_this_week = True
+
                     sim_bank_balance -= cost['amt']
                     outflows.append(f"{cost['desc']}: -${cost['amt']:,.2f}")
 
-        # CC payment: Must be paid from Bank. If Bank < 0, then LOC pays CC.
+        # CC payment on due date
         if d.day == loans[0]['due_day']:
             if loans[0]['bal'] > 0:
                 payment_needed = loans[0]['bal']
 
                 # Bank pays what it can
-                bank_contribution = max(0.0, min(sim_bank_balance, payment_needed))
-                sim_bank_balance -= bank_contribution
+                bank_contribution = max(0.0, min(sim_bank_balance - min_bank_buffer, payment_needed))
+                if bank_contribution > 0:
+                    payment_table_data.append({
+                        "Week": week_start.strftime('%Y-%m-%d'),
+                        "Income": f"${weekly_income_total:,.2f}",
+                        "Expenses": f"${weekly_expense_total:,.2f}",
+                        "Source Account": "Bank Account",
+                        "Source Balance": f"${sim_bank_balance:,.2f}",
+                        "Destination": "Credit Card",
+                        "Dest. Balance": f"${loans[0]['bal']:,.2f}",
+                        "Amount to Pay": f"${bank_contribution:,.2f}"
+                    })
+                    sim_bank_balance -= bank_contribution
+                    payment_made_this_week = True
 
-                # Remaining payment is covered by LOC (Safety Net)
+                # Remaining payment is covered by LOC
                 loc_contribution = payment_needed - bank_contribution
                 if loc_contribution > 0:
+                    payment_table_data.append({
+                        "Week": week_start.strftime('%Y-%m-%d'),
+                        "Income": f"${weekly_income_total:,.2f}",
+                        "Expenses": f"${weekly_expense_total:,.2f}",
+                        "Source Account": "Line of Credit",
+                        "Source Balance": f"${loans[1]['bal']:,.2f}",
+                        "Destination": "Credit Card",
+                        "Dest. Balance": f"${loans[0]['bal'] - bank_contribution:,.2f}",
+                        "Amount to Pay": f"${loc_contribution:,.2f}"
+                    })
                     loans[1]['bal'] += loc_contribution
-                    inflows.append(f"LOC cover CC: +${loc_contribution:,.2f}")
+                    outflows.append(f"LOC Float (CC): +${loc_contribution:,.2f}")
+                    payment_made_this_week = True
 
                 outflows.append(f"CC Payment: -${payment_needed:,.2f}")
                 loans[0]['bal'] = 0
 
-    # Float Strategy: If bank balance is negative, put it on LOC
-    if sim_bank_balance < 0:
-        overdraft = abs(sim_bank_balance)
-        loans[1]['bal'] += overdraft
-        inflows.append(f"LOC Float: +${overdraft:,.2f}")
-        sim_bank_balance = 0
-
-    # Interest and Debt Paydown
-    # CC doesn't accrue interest as it's assumed paid interest-free by due date
-    # but still apply rate to any other debt balances
+    # LOC interest charges and payments
     for l in sorted(loans, key=lambda x: x['rate'], reverse=True):
-        if l['desc'] == "LOC":  # Apply interest to LOC daily/weekly
-            weekly_interest = round((l['bal'] * l['rate']) / 52, 2)
+        if l['desc'] == "LOC":
+            weekly_interest = round((l['bal'] * l['rate']) / 52, 2) # weekly interest
             l['bal'] += weekly_interest
             total_interest_paid += weekly_interest
 
-        if sim_bank_balance > min_bank_buffer and l['bal'] > 0:
+        # Apply any extra cash to LOC balance
+        if l['desc'] == "LOC" and sim_bank_balance > min_bank_buffer and l['bal'] > 0:
             payment = min(sim_bank_balance - min_bank_buffer, l['bal'])
-            l['bal'] -= round(payment, 2)
-            sim_bank_balance -= round(payment, 2)
-            outflows.append(f"Paid {l['desc']}: -${payment:,.2f}")
+
+            # when LOC is paid off, stop making table entries
+            if payment > 0.01:
+                l['bal'] -= round(payment, 2)
+                sim_bank_balance -= round(payment, 2)
+                outflows.append(f"Paid {l['desc']}: -${payment:,.2f}")
+                payment_made_this_week = True
+
+                payment_table_data.append({
+                    "Week": week_start.strftime('%Y-%m-%d'),
+                    "Income": f"${weekly_income_total:,.2f}",
+                    "Expenses": f"${weekly_expense_total:,.2f}",
+                    "Source Account": "Bank Account",
+                    "Source Balance": f"${sim_bank_balance:,.2f}",
+                    "Destination": "LOC",
+                    "Dest. Balance": f"${l['bal']:,.2f}",
+                    "Amount to Pay": f"${payment:,.2f}"
+                })
+
+    # --- Log all weeks, including ones with no payments in them ---
+    if not payment_made_this_week:
+        payment_table_data.append({
+            "Week": week_start.strftime('%Y-%m-%d'),
+            "Income": f"${weekly_income_total:,.2f}",
+            "Expenses": f"${weekly_expense_total:,.2f}",
+            "Source Account": "Bank Account",
+            "Source Balance": f"${sim_bank_balance:,.2f}",
+            "Destination": "",
+            "Dest. Balance": "",
+            "Amount to Pay": "$0.00"
+        })
 
     data.append({
         "Date": week_start,
@@ -277,3 +384,31 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+
+# --- Table of Weekly Inflows and Outflows ---
+st.subheader("Weekly Cash Flow")
+
+if payment_table_data:
+    pay_df = pd.DataFrame(payment_table_data)
+
+    # only label the first entry for a given week
+    mask = pay_df['Week'].duplicated()
+    pay_df.loc[mask, ["Week", "Income", "Expenses"]] = ""
+
+    st.dataframe(
+        pay_df,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Week": st.column_config.TextColumn("Week"),
+            "Income": st.column_config.TextColumn("Income"),
+            "Expenses": st.column_config.TextColumn("Expenses"),
+            "Source Account": st.column_config.TextColumn("Source Account"),
+            "Source Balance": st.column_config.TextColumn("Source Balance"),
+            "Destination": st.column_config.TextColumn("Destination"),
+            "Dest. Balance": st.column_config.TextColumn("Dest. Balance"),
+            "Amount to Pay": st.column_config.TextColumn("Amount to Pay"),
+        }
+    )
+else:
+    st.info("No payments required for this period.")
