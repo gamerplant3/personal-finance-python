@@ -4,7 +4,7 @@
 | balance_at_maturity.py | given current date, mortgage balance, and maturity date, returns the remaining principal balance at end of term |
 | prepayment_analysis.py | given mortgage balance and terms, simulates various prepayment scenarios and effect of different frequencies |
 | cashflow_2026.py | determines weekly cashflow for a given timeframe given list of income and expenses to determine debt payoff |
-| app.py | streamlit version of cashflow_2026.py |
+| cashflow_2026_streamlit.py | streamlit version of cashflow_2026.py |
 
 **output figure from analyze_directory.py**
 ![image](https://github.com/user-attachments/assets/53668afe-28b1-4136-9f71-d64562285d6e)
@@ -39,5 +39,8 @@ Extra   Freq Prepayments Principal Paid Saved by Freq Saved by Prepay Total Int 
 **output from cashflow_2026.py**
 <img width="2198" height="1313" alt="Screenshot 2026-02-03 214913" src="https://github.com/user-attachments/assets/9e240b73-807f-448f-96b9-9d8ea152fec6" />
 
-**output from app.py**
+**output from cashflow_2026_streamlit.py**
 <img width="2233" height="1286" alt="Screenshot 2026-02-06 002431" src="https://github.com/user-attachments/assets/f29106a3-50e0-45f0-b8d7-2598af8902e8" />
+
+<img width="1787" height="910" alt="Screenshot 2026-02-07 135104" src="https://github.com/user-attachments/assets/1d51bc62-4383-49c6-8fd6-64cbdf758f4c" />
+
