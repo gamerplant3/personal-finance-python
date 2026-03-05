@@ -1,0 +1,65 @@
+[0203/221102.434:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 1
+[0203/221102.634:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 2
+[0203/222234.106:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0203/222234.106:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0203/222234.795:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0203/222234.795:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 1 BrowserInstance: channel error: Disconnected
+[0203/222234.798:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 2 Environment destroyed
+[0203/222234.832:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 1 Environment destroyed
+[0205/152140.983:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 1
+[0205/152141.180:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 2
+[0205/203207.828:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 2 Environment destroyed
+[0205/203207.908:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 1 Environment destroyed
+[0205/203244.220:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 1
+[0205/203248.559:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 2
+[0205/205644.227:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0205/205644.227:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0205/205644.683:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0205/205644.683:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 1 BrowserInstance: channel error: Disconnected
+[0205/205644.690:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 2 Environment destroyed
+[0205/205644.707:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 1 Environment destroyed
+[0205/210124.647:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 1
+[0205/210124.878:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 2
+[0205/224045.711:ERROR:ddg\webview\webview_embedded\ipc\ipc_client.cc:721] Env: 1 RPCViewHandler view is null for handle: 9
+[0205/235202.181:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0205/235202.181:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0205/235202.418:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 2 Environment destroyed
+[0205/235202.450:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 1 Environment destroyed
+[0205/235233.312:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 1
+[0205/235233.526:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 2
+[0206/003035.995:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0206/003035.995:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0206/003036.341:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 2 Environment destroyed
+[0206/003036.356:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 1 Environment destroyed
+[0207/110005.570:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 1
+[0207/110006.310:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:229] Created environment, environments size: 2
+[0207/151650.317:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0207/151650.317:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0207/151650.373:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 2 Environment destroyed
+[0207/151650.415:WARNING:ddg\webview\webview_embedded\environment.cc:41] Env: 1 Environment destroyed
+[0227/091232.370:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:230] Created environment, environments size: 1
+[0227/091232.957:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:230] Created environment, environments size: 2
+[0227/091236.761:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:273] [DPI-DBG] ComCefViewController::UpdateControllerVisibility: env=Env: 1  h=2 browser_hwnd=0x0x2085c parent_hwnd=0x0x3085a IsIconic=0 visibility=0 pre_hidden_prior=2
+[0227/091236.761:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:77] [DPI-DBG] ComCefViewController::put_WebContentVisibility: env=Env: 1  h=2 browser_hwnd=0x0x2085c parent_hwnd=0x0x3085a visibility=2 pre_hidden_prior=2
+[0227/091237.297:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:273] [DPI-DBG] ComCefViewController::UpdateControllerVisibility: env=Env: 2  h=1 browser_hwnd=0x0x30744 parent_hwnd=0x0x307fe IsIconic=0 visibility=0 pre_hidden_prior=2
+[0227/091237.297:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:77] [DPI-DBG] ComCefViewController::put_WebContentVisibility: env=Env: 2  h=1 browser_hwnd=0x0x30744 parent_hwnd=0x0x307fe visibility=2 pre_hidden_prior=2
+[0227/091237.626:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:77] [DPI-DBG] ComCefViewController::put_WebContentVisibility: env=Env: 2  h=1 browser_hwnd=0x0x30744 parent_hwnd=0x0x307fe visibility=1 pre_hidden_prior=2
+[0227/091822.473:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0227/091822.473:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0227/091822.856:WARNING:ddg\webview\webview_embedded\environment.cc:43] Env: 2 Environment destroyed
+[0227/091822.932:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0227/091822.932:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 1 BrowserInstance: channel error: Disconnected
+[0227/091822.960:WARNING:ddg\webview\webview_embedded\environment.cc:43] Env: 1 Environment destroyed
+[0303/223015.359:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:230] Created environment, environments size: 1
+[0303/223015.856:INFO:ddg\webview\webview_embedded\com\com_cef_view_environment.cc:230] Created environment, environments size: 2
+[0303/223020.097:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:273] [DPI-DBG] ComCefViewController::UpdateControllerVisibility: env=Env: 1  h=2 browser_hwnd=0x0x70b1c parent_hwnd=0x0x80b14 IsIconic=0 visibility=0 pre_hidden_prior=2
+[0303/223020.097:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:77] [DPI-DBG] ComCefViewController::put_WebContentVisibility: env=Env: 1  h=2 browser_hwnd=0x0x70b1c parent_hwnd=0x0x80b14 visibility=2 pre_hidden_prior=2
+[0303/223020.718:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:273] [DPI-DBG] ComCefViewController::UpdateControllerVisibility: env=Env: 2  h=1 browser_hwnd=0x0x70b1e parent_hwnd=0x0x280ae6 IsIconic=0 visibility=0 pre_hidden_prior=2
+[0303/223020.718:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:77] [DPI-DBG] ComCefViewController::put_WebContentVisibility: env=Env: 2  h=1 browser_hwnd=0x0x70b1e parent_hwnd=0x0x280ae6 visibility=2 pre_hidden_prior=2
+[0303/223021.181:INFO:ddg\webview\webview_embedded\com\com_cef_view_controller.cc:77] [DPI-DBG] ComCefViewController::put_WebContentVisibility: env=Env: 2  h=1 browser_hwnd=0x0x70b1e parent_hwnd=0x0x280ae6 visibility=1 pre_hidden_prior=2
+[0303/223236.436:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0303/223236.436:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 2 BrowserInstance: channel error: Disconnected
+[0303/223236.888:WARNING:ddg\webview\webview_embedded\environment.cc:43] Env: 2 Environment destroyed
+[0303/223236.967:WARNING:ddg\webview\common\ipc\channel.cc:220] Channel disconnected
+[0303/223236.967:WARNING:ddg\webview\webview_embedded\browser_instance.cc:253] Env: 1 BrowserInstance: channel error: Disconnected
+[0303/223237.015:WARNING:ddg\webview\webview_embedded\environment.cc:43] Env: 1 Environment destroyed
