@@ -76,8 +76,12 @@ with st.sidebar:
     next_pay_ui = c4.date_input("Next Pay Date", value=datetime(2026, 2, 13))
 
     w1, w2 = st.columns([1, 1])
-    wf_amt = w1.number_input("Bonus ($)", value=5000.0, step=100.0, key="wf_a")
-    wf_date = w2.date_input("Date", value=datetime(2026, 4, 15), key="wf_d")
+    bonus_amt = w1.number_input("Bonus ($)", value=5000.0, step=100.0)
+    bonus_date = w2.date_input("Date", value=datetime(2026, 4, 15))
+
+    w3, w4 = st.columns([1, 1])
+    taxrefund_amt = w3.number_input("Tax refund ($)", value=4000.0, step=100.0)
+    taxrefund_date = w4.date_input("Date", value=datetime(2026, 3, 12))
 
     st.divider()
 
@@ -146,13 +150,16 @@ housing_inputs = [
     {"desc": "Property Tax", "amt": tax_amt, "freq": tax_freq, "day": 1, "use_cc": tax_cc}
 ]
 
+windfalls = [
+    {"desc": "Bonus", "amt": bonus_amt, "date": datetime.combine(bonus_date, datetime.min.time())},
+    {"desc": "Tax refund", "amt": taxrefund_amt, "date": datetime.combine(taxrefund_date, datetime.min.time())}
+]
+
 data = []
 current_date = start_date
 sim_bank_balance = float(bank_balance)
 total_interest_paid = 0.0
-windfalls = [{"desc": "Bonus", "amt": wf_amt, "date": datetime.combine(wf_date, datetime.min.time())}]
 payment_table_data = []
-
 for week in range(number_of_weeks):
     week_start, week_end = current_date, current_date + timedelta(days=6)
     inflows, outflows = [], []
@@ -382,7 +389,7 @@ fig.update_layout(
     legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width='stretch')
 
 # --- Table of Weekly Inflows and Outflows ---
 st.subheader("Weekly Cash Flow")
@@ -396,7 +403,7 @@ if payment_table_data:
 
     st.dataframe(
         pay_df,
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
         column_config={
             "Week": st.column_config.TextColumn("Week"),
