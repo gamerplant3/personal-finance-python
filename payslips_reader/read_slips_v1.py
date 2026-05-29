@@ -6,10 +6,10 @@ import pandas as pd
 from datetime import datetime
 from openpyxl import load_workbook
 
-#FIX ME! LOTS OF BREAKAGES WHEN THE FILES ARE BIGGER! (more lines per section)
+#FIX ME! Maybe change to a doc split method? So it doesn't break when more lines are added with time.
 
 # folder containing PDF files
-folder = r"C:\Users\wchikowero\Documents\Local\payslips\v1"
+folder = r"C:\Users\[   ]\Documents\Local\payslips\v1"
 
 # functions for reading PDF files, extracting text, and writing to Excel
 def extract_lines_from_pdf(file_path):
