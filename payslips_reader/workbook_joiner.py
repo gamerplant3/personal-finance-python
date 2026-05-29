@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 # Configuration
-search_dir = r"C:\Users\wchikowero\OneDrive - Thornton Tomasetti, Inc\Documents\0 - Wendy Chikowero\0 General Work\TT Pay Slips"  # Change this to the folder you want to search
+search_dir = r"C:\Users\[   ]\TT Pay Slips"  # Change this to the folder you want to search
 target_filename = "pay_summary.xlsx"  # Name of the workbooks to find
 output_filename = "combined.xlsx"  # Name of the output workbook
 
