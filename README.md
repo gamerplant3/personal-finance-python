@@ -47,9 +47,13 @@ python -m pytest tests/ -v
 
 **output from cashflow forecaster (Streamlit)**
 
-<img width="2233" height="1286" alt="Screenshot 2026-02-06 002431" src="https://github.com/user-attachments/assets/f29106a3-50e0-45f0-b8d7-2598af8902e8" />
+Page 1
 
-<img width="1787" height="910" alt="Screenshot 2026-02-07 135104" src="https://github.com/user-attachments/assets/1d51bc62-4383-49c6-8fd6-64cbdf758f4c" />
+<img width="2600" height="4400" alt="screenie" src="https://github.com/user-attachments/assets/ac3d9717-5516-4c8c-824b-129b49a4794b" />
+
+Page 2
+
+<img width="2600" height="4400" alt="2ndscreenie" src="https://github.com/user-attachments/assets/63c8997c-7fac-4d00-8f5b-4864d74474d5" />
 
 **output from prepayment_analysis.py** (defaults: $350k principal, 3.7% rate, 25-yr amort, 5-yr term)
 
